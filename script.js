@@ -1,3 +1,35 @@
+var secondsRemaining;
+var intervalHandle;
+
+// Show the form again.
+function resetPage () {
+  document.getElementById('inputArea').style.display = 'block';
+}
+
+
+function tick () {
+  var timeDisplay = document.getElementById('time');
+
+  var min = Math.floor(secondsRemaining / 60);
+  var sec = secondsRemaining - (min * 60);
+
+  if (sec < 10) {
+    sec = '0' + sec;
+  }
+
+  var message = min.toString() + ':' + sec;
+
+  timeDisplay.innerHTML = message;
+
+  if (secondsRemaining === 0) {
+    alert('Done!');
+    clearInterval(intervalHandle);
+    resetPage();
+  }
+
+  secondsRemaining--;
+}
+
 function startCountdown () {
   // Get minutes entered.
   var minutes = document.getElementById('minutes').value;
@@ -5,6 +37,7 @@ function startCountdown () {
   // Check if not a number.
   if (isNaN(minutes)) {
     alert('Please enter a number.');
+    return;
   }
 
   // Calculate seconds.
@@ -16,7 +49,6 @@ function startCountdown () {
   // Hide the form.
   document.getElementById('inputArea').style.display = 'none';
 }
-
 
 // When page loads.
 window.onload = function () {
